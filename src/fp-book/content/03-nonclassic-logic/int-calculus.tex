@@ -1,0 +1,63 @@
+\section{Интуиционистское исчисление высказываний}
+
+\begin{remark}
+    Интуиционистское исчисление высказываний приводится в формулировке Гейтинга.
+\end{remark}
+
+Исходный базис исчисления $P^i$:
+\begin{itemize}
+    \item Исходные символы: $($, $)$, $\lnot$, $\supset$, $\land$, $\lor$.
+    \item Пропозициональные переменные: $p$, $q$, $r$, $s$, \dots
+\end{itemize}
+
+Правила построения исчисления $P^i$:
+\begin{itemize}
+    \item Отдельно стоящая переменная есть ппф.
+    \item Если $A$ --- ппф, то $\overline{A}$ --- ппф.
+    \item Если $A$ и $B$ --- ппф, то $(A \supset B)$, $(A \land B)$, $(A \lor B)$ --- ппф.
+\end{itemize}
+\begin{remark}
+    Логические связки вводятся как исходные символы исчисления, а не определяются через импликацию (или другие связки).
+\end{remark}
+
+Правила вывода исчисления $P^i$:
+\begin{itemize}
+    \item Modus ponens ($MP$): $A, A \supset B \vdash B$
+    \item Подстановка ($\beta$): $A \vdash [B/p]A$
+\end{itemize}
+
+Аксиомные схемы исчисления $P^i$:
+\begin{itemize}
+    \item ($K$): $A \supset (B \supset A)$
+    \item ($S$): $A \supset (B \supset C) \supset (A \supset B \supset (A \supset C))$
+    \item ($\land_L$): $A \land B \supset A$
+    \item ($\land_R$): $A \land B \supset B$
+    \item ($\lor_L$): $A \supset A \lor B$
+    \item ($\lor_R$): $B \supset A \lor B$
+    \item ($\supset_{\land}$): $A \supset (B \supset A \land B)$
+    \item ($T\lor$): $(A \supset B) \supset ((B\supset C) \supset (A \lor B \supset C))$
+    \item ($RdAb$): $(A \supset B) \supset ((A \supset \overline{B}) \supset \overline{A})$
+    \item ($K\lnot$): $A \supset (\overline{A} \supset B)$
+\end{itemize}
+
+\begin{remark}
+    Аксиома $RdAb$ называется \textit{принципом сведения к абсурду} (reduction to an absurd). Эту аксиому можно использовать как производное правило вывода:
+
+    \begin{equation*}
+        \frac{
+            \vdash A \supset B \;\;\; \vdash A \supset \overline{B}
+        }{
+            \vdash \overline{A}
+        }
+    \end{equation*}
+
+    При записи будем использовать обозначение $RdAb(1, 2)$, где $1 = A \supset B$, $2 = A \supset \overline{B}$.
+\end{remark}
+
+\begin{remark}
+    Отметим, что существует много различных формулировок интуиционистского исчисления: \textit{исчисление Колмогорова}, \textit{минимальное исчисление} (без $K\lnot$, причём эта аксиома становится невыводимой), \textit{позитивное исчисление} (без $RdAb$, $K\lnot$).
+\end{remark}
+
+\begin{remark}
+    В силу аксиом $K$ и $S$ в исчислении $P^i$ выполняется теорема дедукции.
+\end{remark}

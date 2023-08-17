@@ -1,0 +1,160 @@
+\section{Исчисление секвенций}
+
+Описанное исчисление $P$ называют исчислением \textit{гильбертовского типа}. Обычно в них много аксиом и небольшое число правил вывода. Альтернативный подход — \textit{генценовский}, или \textit{исчисление секвенций}: в качестве базовой формулы используется не пропозициональная формула, а секвенция. Обычно в генценовских системах мало аксиом и много правил вывода.
+
+\begin{definition}
+    \textit{Схема формулы} --- формула, записанная с точностью до произвольной подстановки.
+\end{definition}
+
+\begin{remark}
+    Поясним, что вообще означает понятие схемы формулы. Схемы записываются как обычные формулы, но в качестве символов используются заглавные буквы латинского алфавита $A$, $B$, $C$, $D$ и т.д. Эти буквы заменяют собой любую формулу рассматриваемого исчисления. То есть использование схем формул позволяет во многих случаях не записывать подстановку в явном виде. Например, аксиома $K$ формулируется как $\vdash A \supset (B \supset A)$. Эта схема заменяет собой одновременно следующие формулы: $\vdash p \supset (q \supset p)$, $\vdash p \supset ((p \lor q) \supset p)$ и другие аналогичные формулы, где вместо $A$ и $B$ подставлены какие-либо другие формулы.
+
+    Если в виде схемы записывается аксиома, то говорят, что записана <<аксиомная схема>> или <<схема аксиом>>.
+\end{remark}
+
+Исходный базис исчисления $LK$:
+\begin{itemize}
+    \item Исходные символы: $($, $)$, $,$, $\lnot$, $\supset$, $\land$, $\lor$, $\vdash$.
+    \item Пропозициональные переменные: $p$, $q$, $r$, $s$, $\dots$
+\end{itemize}
+
+Правила построения формулы исчисления $LK$:
+\begin{itemize}
+    \item Отдельно стоящая переменная есть ппф.
+    \item Если $A$ --- ппф, то $\lnot A$ --- ппф.
+    \item Если $A$ и $B$ --- ппф, то $(A \supset B)$, $(A \land B)$, $(A \lor B)$ --- ппф.
+\end{itemize}
+
+\begin{definition}
+    \textit{Секвенцией} называется выражение вида $\Gamma \vdash \Delta$, где $\Gamma$ и $\Delta$ --- списки пп-формул исчисления $LK$.
+\end{definition}
+
+В исчислении секвенций присутствует единственная аксиома $I$:
+\begin{equation*}
+    A\vdash A
+\end{equation*}
+
+Правила вывода (логические):
+\begin{itemize}
+    \item Правила введения отрицания:
+    \begin{equation*}
+        \frac{\Gamma\vdash A,\Delta}{\Gamma, \overline{A}\vdash \Delta} \tag{$\lnot_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma, A\vdash \Delta}{\Gamma\vdash\overline{A}, \Delta} \tag{$\lnot_R$}
+    \end{equation*}
+    \item Правила введения конъюнкции: 
+    \begin{equation*}
+        \frac{\Gamma, A,B\vdash \Delta}{A\land B, \Gamma \vdash \Delta} \tag{$\land_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma\vdash A, \Delta \;\;\;\;\;\; \Gamma\vdash B,\Delta}{\Gamma \vdash A\land B, \Delta} \tag{$\land_R$}
+    \end{equation*}
+    \item Правила введения дизъюнкции:
+    \begin{equation*}
+        \frac{\Gamma, A\vdash \Delta \;\;\;\;\;\; \Gamma, B \vdash \Delta}{\Gamma, A\lor B \vdash \Delta} \tag{$\lor_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma\vdash A,B,\Delta}{\Gamma\vdash A\lor B, \Delta} \tag{$\lor_R$}
+    \end{equation*}
+    \item Правила введения импликации:
+    \begin{equation*}
+        \frac{\Gamma\vdash A, \Delta \;\;\;\;\;\; \Gamma, B\vdash \Delta}{\Gamma, A\supset B\vdash \Delta} \tag{$\supset_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma, A\vdash B, \Delta}{\Gamma\vdash A\supset B, \Delta} \tag{$\supset_R$}
+    \end{equation*}
+\end{itemize}
+
+Правила вывода (структурные):
+\begin{itemize}
+    \item Правило расширения (weakening):
+    \begin{equation*}
+        \frac{\Gamma\vdash\Delta}{\Gamma,A\vdash\Delta} \tag{$W_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma\vdash\Delta}{\Gamma\vdash A,\Delta} \tag{$W_R$}
+    \end{equation*}
+    \item Правила сокращения (contraction):
+    \begin{equation*}
+        \frac{\Gamma,A,A\vdash\Delta}{\Gamma,A\vdash\Delta} \tag{$C_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma\vdash A,A,\Delta}{\Gamma\vdash A,\Delta} \tag{$C_R$}
+    \end{equation*}
+    \item Правила перестановки (permutation):
+    \begin{equation*}
+        \frac{\Gamma,A,B,\Omega\vdash\Delta}{\Gamma,B,A,\Omega\vdash\Delta} \tag{$P_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma\vdash \Omega,A,B,\Delta}{\Gamma\vdash\Omega,B,A,\Delta} \tag{$P_R$}
+    \end{equation*}
+\end{itemize}
+
+\begin{definition}
+    \textit{Выводом} формулы $A$ в исчислении $LK$ будем понимать вывод секвенции $\vdash A$.
+\end{definition}
+
+\begin{definition}
+    Нахождение посылок некоторого применения правила вывода по известному заключению называется \textit{контрприменением} этого правила.
+\end{definition}
+
+\begin{definition}
+    Дерево с конечным числом узлов, каждый из которых является секвенцией, называется \textit{деревом поиска вывода} секвенции.
+\end{definition}
+
+\begin{definition}
+    Если все листья дерева поиска вывода оказались аксиомами, то получившееся дерево называют \textit{деревом вывода}. В противном случае мы заключаем, что формула не выводима в исчислении $LK$.
+\end{definition}
+
+\begin{remark}
+    Остановимся на том, что означают формулы, записанные в виде секвенций. Исходя из правил $\land_L$ и $\lor_R$ можно заключить, что запятые в левой части секвенции заменяют собой конъюнкцию, а запятые в правой части секвенции --- дизъюнкцию. Имея это ввиду, можно любую формулу исчисления секвенций превратить в формулу исчисления $P$.
+\end{remark}
+
+\begin{remark}
+    Эквивалентность исчислений $LK$ и $P$ можно доказать, но в рамках курса заниматься этим не будем. Достаточно знать, что раз исчисление является пропозициональным, то в нём верны те же формулы, что и в исчислении $P$.
+\end{remark}
+
+\begin{propthm}
+    Закон Пирса: $p \supset q \supset p \supset p$.
+\end{propthm}
+\begin{proof}
+    Вывод в исчислении $LK$ начинается всегда с записи формулы, для которой мы хотим построить доказательство. Справа от записи формулы записывается правило вывода, которое используется, чтобы получить формулу, расположенную на следующей строке вывода. В определённые моменты вывод может распадаться на две параллельных ветви (как того требуют некоторые правила вывода). Вывод в каждой ветви считается завершённым, если получилась аксиома $A\vdash A$. В этот момент можно ставить галочку, показывая, что вывод в данной ветви успешен.
+
+    В то же время, может случиться так, что аксиому $A \vdash A$ получить не представляется возможным. Это означает, что рассматриваемая формула не является теоремой исчисления $LK$.
+
+    \begin{equation*}
+        \begin{array}{c}
+            \begin{array}{llr}
+                1.  & \vdash ((p \supset q) \supset p) \supset p 
+                    & \supset_R 
+                    \\
+                2.  & (p \supset q) \supset p \vdash p
+                    & \supset_L
+                    \\
+            \end{array}
+            \\
+            \begin{array}{c|c}
+                \begin{array}{llr}
+                    3.  & \vdash p \supset q, p
+                        & \supset_R
+                        \\
+                    5.  & p \vdash q, p
+                        & W_R
+                        \\
+                    6.  & p \vdash p
+                        & \checkmark
+                        \\
+                \end{array}
+                &
+                \begin{array}{llr}
+                    4.  & p \vdash p
+                        & \checkmark
+                        \\
+                \end{array}
+            \end{array}
+        \end{array}
+    \end{equation*}
+\end{proof}
+
+По построению исчисление секвенций предлагает эффективный алгоритм так называемого обратного вывода. Это позволяет для любой ппф выяснять, является она выводимой в данной рассматриваемой системе или нет.

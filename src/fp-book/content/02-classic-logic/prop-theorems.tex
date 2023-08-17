@@ -1,0 +1,170 @@
+\section{Доказательства некоторых теорем исчисления высказываний}
+
+\begin{propthm}\label{Theorem:I}
+    Закон рефлексивности импликации \textnormal{($I$)}: $p\supset p$.
+\end{propthm}
+\begin{proof}
+    На каждом шаге вывода либо применяется правило вывода, либо приводится запись аксиомы.
+    \begin{equation*}
+        \begin{array}{lll}
+            1. & \vdash s \supset (p \supset q) \supset ((s \supset p) \supset (s \supset q)) & S \\
+            2. & \vdash p \supset (q \supset p) \supset ((p \supset q) \supset (p \supset p)) & [q/p,p/q,p/s](1) \\
+            3. & \vdash p \supset (q \supset p) & K \\
+            4. & \vdash (p \supset q) \supset (p \supset p) & MP(3,2) \\
+            5. & \vdash (p \supset (q\supset p)) \supset (p \supset p) & [q\supset p/q](4) \\
+            6. & \vdash p \supset p & MP(3,5)
+        \end{array}
+    \end{equation*}
+\end{proof}
+
+\begin{propthm}\label{Theorem:P3-upgrade}
+    Закон отрицания антецедента (P3): $\overline{p} \supset (p \supset q)$
+\end{propthm}
+\begin{proof}
+    \begin{equation*}
+        \begin{array}{lll}
+            1. & \overline{p} \vdash \overline{q} \supset \overline{p} & MP([\overline{p}/p, \overline{q}/q]K) \\ 
+            2. & \overline{p} \vdash p \supset q & MP(1, [p/q, q/p]C\lnot) \\ 
+            3. & \vdash \overline{p} \supset (p \supset q) & DT
+        \end{array}
+    \end{equation*}
+\end{proof}
+
+\begin{propthm}\label{Theorem:Elnot}
+    Закон двойного отрицания ($E\lnot$): $\overline{\overline{p}} \supset p$
+\end{propthm}
+\begin{proof}
+    Используется теорема $P3$, доказательство: \textbf{T-\ref{Theorem:P3-upgrade}}.
+    \begin{equation*}
+        \begin{array}{lll}
+            1. & \vdash \overline{p} \supset \overline{\overline{\overline{p}}} \supset (\overline{\overline{p}} \supset p) & [\overline{\overline{p}}/q]C\lnot \\
+            2. & \vdash \overline{p} \supset (p \supset q) & P3 \\
+            3. & \overline{p} \vdash p \supset q & MP(2) \\
+            4. & \overline{\overline{p}} \vdash \overline{p} \supset \overline{\overline{\overline{p}}} & [\overline{p}/p, \overline{\overline{\overline{p}}}/q]3 \\
+            5. & \overline{\overline{p}} \vdash \overline{\overline{p}} \supset p & MP(4,1) \\
+            6. & \vdash \overline{\overline{p}} \supset p & TD(TD(MP(5)))
+        \end{array}
+    \end{equation*}
+\end{proof}
+
+\begin{propthm}\label{Theorem:And}
+    ($And$): $p \supset (q \supset (p \land q))$
+\end{propthm}
+\begin{proof}
+    Смысл этой теоремы в том, что, доказав два утверждения, мы можем говорить о том, что мы доказали и их конъюнкцию. Подобная теорема очень важна для осуществления доказательств эквивалентности одних утверждений другим (так как эквивалентность определяется через конъюнкцию).
+
+    Сначала запишем определение конъюнкции:
+    \begin{equation*}
+        p \land q = \overline{\overline{p} \lor \overline{q}}
+    \end{equation*}
+
+    Таким образом, нам надо доказать следующее утверждение:
+    \begin{equation*}
+        p, q \vdash \overline{\overline{p} \lor \overline{q}}
+    \end{equation*}
+
+    Запишем это выражение следующим образом (по теореме дедукции):
+    \begin{equation*}\label{what}
+        p \vdash q \supset \overline{\overline{p} \lor \overline{q}} \tag{$\ast$}
+    \end{equation*}
+    
+    Для доказательства правой части этого утверждения было бы удобно снять отрицание над сложной формулой. Теорема $C\lnot'$ (\textbf{T-\ref{Theorem:Clnot'}}) не даст нам требуемого результата, так как ставит отрицание над обеими аргументами импликации.
+
+    Так мы приходим к необходимости доказывать \textit{леммы} в ходе наших доказательствах. Дадим этой лемме собственное обозначение $Z$.
+
+    \begin{propthm}\label{Theorem:Z}
+        ($Z$): $p \supset \overline{q} \supset (q \supset \overline{p})$
+    \end{propthm}
+    \begin{proof}
+        То, что это доказуемое утверждение, легко проверить путём построения таблицы истинности этого утверждения. Как известно, любая тавтология является теоремой, поэтому предоставим её доказательство.
+
+        Используются теоремы $C\lnot'$ (\textbf{T-\ref{Theorem:Clnot'}}) и $I\lnot$ (\textbf{T-\ref{Theorem:Ilnot}}).
+
+        \begin{equation*}
+            \begin{array}{llr}
+                1. & \vdash p \supset q \supset (\overline{q} \supset \overline{p}) & C\lnot' \\
+                2. & \vdash p \supset \overline{q} \supset (\overline{\overline{q}} \supset \overline{p}) & [\overline{q}/q]1\\
+                3. & p \supset \overline{q} \vdash \overline{\overline{q}} \supset \overline{p}& MP(2)\\
+                4. & q \vdash \overline{\overline{q}} & MP([q/p]I\lnot) \\
+                5. & p \supset \overline{q}, \; q \vdash \overline{p} & MP(4,3) \\
+                6. & \vdash p \supset \overline{q} \supset (q \supset \overline{p}) & DT(5)
+            \end{array}
+        \end{equation*}
+    \end{proof}
+
+    Продолжим раскручивать наше исходное утверждение. Совершим подстановку в только что доказанную лемму:
+    \begin{equation*}
+        \vdash 
+            \overline{p} \lor \overline{q}
+            \supset \overline{q}
+        \supset 
+        (
+            q \supset \overline{\overline{p} \lor \overline{q}}
+        ) \;\;\; [\overline{p} \lor \overline{q}/p]Z
+    \end{equation*}
+
+    В нашем выражении (\ref{what}) фигурировала ещё выводимость из $p$. Значит для совершения корректного modus ponens нам необходимо доказать $\overline{p} \lor \overline{q} \supset \overline{q}$ из посылки $p$. Не будем вводить специального обозначения для этой леммы.
+
+    \begin{propthm}
+        ($Lemma\ 2$): $\overline{p} \vdash p \lor q \supset q$
+    \end{propthm}
+    \begin{proof}
+        Чтобы доказательство леммы было чище, мы докажем её в представленном виде --- без излишних отрицаний над переменными.
+
+        Используются теоремы $C$ (\textbf{T-\ref{Theorem:C}}), $B'$ (\textbf{T-\ref{Theorem:B'}}) и $P3$ (\textbf{T-\ref{Theorem:P3-upgrade}}).
+
+        \begin{equation*}
+            \begin{array}{llr}
+                1. & \vdash p \supset (q \supset s) \supset (q \supset (p \supset s)) & C \\
+                2. & \vdash p\lor q \supset (\overline{p} \supset q) \supset (\overline{p} \supset (p \lor q \supset q)) & [\overline{p}/q, p\lor q/p, q/s]C \\
+                3. & \vdash p \supset q \supset (q \supset s \supset (p \supset s)) & B' \\
+                4. & \vdash \overline{p} \supset (p \supset q) \supset (p \supset q \supset q \supset (\overline{p} \supset q)) & [p \supset q/q, \overline{p}/p, q/s]B'\\
+                5. & \vdash \overline{p} \supset (p \supset q) & P3 \\
+                6. & \vdash p \supset q \supset q \supset (\overline{p} \supset q) & MP(5,4) \\
+                7. & \vdash p \lor q \supset (\overline{p} \supset q) & Def\lor(6) \\
+                8. & \vdash \overline{p} \supset (p \lor q \supset q) & MP(7,2) \\
+                9. & \overline{p} \vdash p \lor q \supset q & MP(8)
+            \end{array}
+        \end{equation*}
+    \end{proof}
+
+    Итак, теперь у нас есть все возможности, чтобы осуществить доказательство исходного утверждения.
+
+    \begin{equation*}
+        \begin{array}{llr}
+            1. & \vdash \overline{p} \lor \overline{q} \supset \overline{q} \supset (q \supset \overline{\overline{p} \lor \overline{q}}) & [\overline{p} \lor \overline{q}/p]Z \\
+            2. & \overline{p} \vdash p \lor q \supset q & Lemma\ 2\\
+            3. & p \vdash \overline{p} \lor \overline{q} \supset \overline{q} & MP(MP(I\lnot, TD([\overline{p}/p, \overline{q}/q]2)) \\
+            4. & p \vdash q \supset \overline{\overline{p} \lor \overline{q}} & MP(3,1) \\
+            5. & \vdash p \supset (q \supset p \land q) & Def \land(TD(4))
+        \end{array}
+    \end{equation*}
+\end{proof}
+
+\begin{remark}
+    Результат доказательства теоремы \ref{Theorem:And} будем использовать как производное правило вывода:
+    \begin{equation*}
+        \frac{
+            \vdash A \;\;\; \vdash B
+        }{
+            \vdash A \land B
+        }
+        \tag{And}
+    \end{equation*}
+
+    При оформлении доказательств будем использовать запись $And(A,B)$.
+\end{remark}
+
+\begin{propthm}\label{Theorem:equivlnot}
+    ($\equiv^{\lnot}$): $p \equiv \overline{\overline{p}}$
+\end{propthm}
+\begin{proof}
+    Эквивалентность определяется следующим образом: $A \equiv B := (A\supset B) \land (B\supset A)$. Значит для доказательства эквивалентности утверждений достаточно будет отдельно доказать следование первого из второго и отдельно второго из первого. Рассматриваемая сейчас эквивалентность --- как раз тот случай.
+    \begin{equation*}
+        \begin{array}{llr}
+            1. & \vdash p \supset \overline{\overline{p}} & I\lnot \\
+            2. & \vdash \overline{\overline{p}} \supset p & E\lnot \\
+            3. & \vdash p \equiv \overline{\overline{p}} & Def\equiv(And(1,2))
+        \end{array}
+    \end{equation*}
+\end{proof}

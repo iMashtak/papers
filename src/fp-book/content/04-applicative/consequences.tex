@@ -1,0 +1,103 @@
+\section{Построения на $\lambda$-термах и комбинаторах}
+
+$\lambda$-исчисление, несмотря на свою кажущуюся оторванность от реального мира, напротив является одной из возможных моделей для описания оснований математики. В данном разделе опишем, как с помощью $\lambda$-термов задать логические значения, натуральные числа и операции над ними, структуры данных (пары, списки), а также рекурсию. В целом $\lambda$-исчисление само по себе в некоторой степени является языком программирования.
+
+Для упрощения добавим в аппликативную систему объекты-значения, которые будем обозначать как $a, b, c, ...$. Это такие значения, которые не являются переменными, но по отношению к которым действуют правила подстановки.
+
+\subsection*{Логические значения и операции над ними}
+
+\begin{itemize}
+    \item $True = \lambda x. \lambda y. x$, $True\ x\ y = x = K$
+    \item $False = \lambda x. \lambda y. y$, $False\ x\ y = y$
+    \item $Test = \lambda xyz.xyz$, $Test\ x\ y\ z = xyz$
+\end{itemize}
+
+\begin{equation*}
+    Test\ True\ a\ b = True\ a\ b = a
+\end{equation*}
+\begin{equation*}
+    Test\ False\ a\ b = False\ a\ b = b
+\end{equation*}
+
+\begin{itemize}
+    \item $And = \lambda xy. xy\ False$
+\end{itemize}
+
+\begin{equation*}
+    \begin{array}{rcl}
+        And\ True\ True &=& (\lambda xy. xy\ False)\ True\ True \\ 
+        &=& True\ True\ False \\
+        &=& True
+    \end{array}    
+\end{equation*}
+
+\begin{equation*}
+    \begin{array}{rcl}
+        And\ True\ False &=& (\lambda xy. xy\ False)\ True\ False \\ 
+        &=& True\ False\ False \\
+        &=& False
+    \end{array}    
+\end{equation*}
+
+\begin{equation*}
+    \begin{array}{rcl}
+        And\ False\ True &=& (\lambda xy. xy\ False)\ False\ True \\ 
+        &=& False\ True\ False \\
+        &=& False
+    \end{array}    
+\end{equation*}
+
+\subsection*{Пары}
+
+\begin{itemize}
+    \item $Pair = \lambda xyf. fxy$ --- структура, применяющая функцию $f$ по отношению к двум элементам $x$ и $y$, которые и образуют пару.
+    \item $First = \lambda p.p\ True$ --- комбинатор $True$ возьмёт первый аргумент из пары $p$.
+    \item $Second = \lambda p.p\ False$ --- комбинатор $False$ возьмёт второй аргумент из пары $p$.
+\end{itemize}
+
+\begin{equation*}
+    \begin{array}{rcl}
+        First\ (Pair\ a\ b) &=& (\lambda p.p\ True) (Pair\ a\ b) \\
+        &=& Pair\ a\ b\ True \\
+        &=& True\ a\ b \\ 
+        &=& a
+    \end{array}
+\end{equation*}
+
+\subsection*{Списки}
+
+TODO
+
+\subsection*{Числа}
+
+TODO
+
+\subsection*{Рекурсия}
+
+Некоторые термы невозможно редуцировать до конечного состояния. Примером такого терма может служить следующий:
+\begin{equation*}
+    (\lambda x.xx)(\lambda x.xx)
+\end{equation*}
+
+Этот терм содержит один редекс, но при выполнении редукции получается опять тот же самый терм.
+
+На основе этой идеи строится комбинатор неподвижной точки $Y$:
+\begin{equation*}
+    Y = \lambda f.(\lambda x. f(xx))(\lambda x. f(xx))
+\end{equation*}
+
+Рассмотрим применение некоторого значения к комбинатору $Y$:
+\begin{equation*}
+    \begin{array}{rcl}
+        Ya &=& \lambda f.(\lambda x. f(xx))(\lambda x. f(xx))\ a \\
+        &=& (\lambda x. a(xx)) \\
+        &=& a((\lambda x. a(xx))(\lambda x. a(xx))) \\ 
+        &=& a (\lambda f. (\lambda x.f(xx)(\lambda x.f(xx)))a) \\
+        &=& a (Ya)
+    \end{array}
+\end{equation*}
+
+Видно, что комбинатор $Y$ порождает значение $a$ бесконечное количество раз. Завершением рекурсии должен заниматься сам $a$ --- то есть $a$ должно быть функцией с условным оператором, который бы отбросил аргумент, в котором в качестве редекса выступает $Ya$. Стратегия редукции <<вызов по имени>> (ленивые вычисления) здесь наиболее уместна. Пример:
+\begin{equation*}
+    Y(KI) = KI(Y(KI)) = I
+\end{equation*}

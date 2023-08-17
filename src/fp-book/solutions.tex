@@ -1,0 +1,30 @@
+\documentclass[12pt,a5paper,oneside,final]{report}
+
+\def\showsolution{true}
+\def\UseLinuxLibertineFont{true}
+\def\TitleCaption{решения задач}
+
+\input{resources/preambles/custom/preamble}
+
+\usepackage{resources/styles/title/title}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \clearpage
+
+    \chapter{Общая алгебра}
+    \input{content/01-algebra/tasks}
+
+    \chapter{Классическая логика}
+    \input{content/02-classic-logic/tasks}
+
+    \chapter{Неклассические логики}
+    \input{content/03-nonclassic-logic/tasks}
+
+    \chapter{Аппликативные формальные системы}
+    \input{content/04-applicative/tasks}
+
+    \chapter{Теория типов}
+    \input{content/05-type-theory/tasks}
+\end{document}

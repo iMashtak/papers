@@ -1,0 +1,4 @@
+name: books
+repos:
+  - https://gitlab.com/iMashtak/lpt-default-resources.git
+version: 0.2.3

@@ -1,0 +1,70 @@
+\section{Классическое исчисление предикатов 2-го порядка}
+
+\textit{Функциональное исчисление второго порядка} имеет в дополнение к обозначениям функционального исчисления 1-го порядка ещё кванторы над пропозициональными и предикатными переменными.
+
+Исходный базис исчисления $F_2$:
+\begin{itemize}
+    \item Исходные символы: $($, $)$, $\supset$, $\lnot$, $\forall$.
+    \item Индивидные переменные: $x$, $y$, $z$, $\dots$
+    \item Пропозициональные переменные: $p$, $q$, $r$, $s$, $\dots$
+    \item Предикатные переменные: $P$, $Q$, $R$, $S$, $\dots$
+    \item Индивидные константы: $a$, $b$, $c$, $\dots$
+    \item Пропозициональные константы: $A$, $B$, $C$, $\dots$
+    \item Предикатные константы: $F$, $G$, $H$, $\dots$ 
+\end{itemize}
+
+Правила построения исчисления $F_2$:
+\begin{itemize}
+    \item Отдельно стоящая пропозициональная переменная --- ппф.
+    \item Если $P$ --- $n$-арная предикатная переменная и если $x_1,...,x_n$ --- индивидные переменные или константы, то $F(x_1,...,x_n)$ --- это ппф.
+    \item Если $\Gamma$ --- ппф, то $\lnot \Gamma$ --- ппф.
+    \item Если $\Gamma$ и $\Delta$ --- ппф, то $(\Gamma \supset \Delta)$ --- ппф.
+    \item Если $\Gamma$ --- ппф, а $x$ --- \textbf{произвольная} переменная, то $\forall x \Gamma$ --- ппф.
+\end{itemize}
+
+Правила вывода исчисления $F_2$:
+\begin{itemize}
+    \item $\text{Modus ponens}$: из $\vdash A$, $\vdash A \supset B$ следует $\vdash B$.
+    \item Правило обобщения: из $\vdash A$ следует $\vdash \forall x A$.
+    \item Правила подстановки.
+\end{itemize}
+
+Аксиомные схемы и аксиомы исчисления $F_2$:
+\begin{itemize}
+    \item ($K$): $p \supset (q \supset p)$.
+    \item ($S$): $p \supset (q \supset r) \supset (p \supset q \supset (p \supset r))$.
+    \item ($C\lnot$): $\overline{p} \supset \overline{q} \supset (q \supset p)$.
+    \item Аксиома обобщения консеквента: \begin{itemize}
+        \item[1.] $\forall x (p \supset F(x)) \supset (p \supset \forall x F(x))$.
+        \item[2.] $\forall p (A \supset B) \supset (A \supset \forall p B)$, где $p$ не свободна в $A$.
+        \item[3.] $\forall F (A \supset B) \supset (A \supset \forall F B)$, где $F=F(x_1,...,x_n)$ не свободная в $A$.
+    \end{itemize}
+    \item Аксиома уточнения: \begin{itemize}
+        \item[1.] $\forall x F(x)\supset F(y)$.
+        \item[2.] $\forall p A \supset [B/p]A$.
+        \item[3.] $\forall F A \supset [B/F]A$, где $F=F(x_1,...,x_n)$ и $x_1,...,x_n$ различны.
+    \end{itemize}
+\end{itemize}
+
+Так как исчисление $F_2$ содержит все правила вывода и аксиомы исчисления $F_1$, то в нём можно доказать все теоремы исчисления $F_1$. Для исчисления $F_2$ сохраняет силу теорема дедукции и теорема о подстановочности эквивалентности.
+
+Введём следующие определения (истина и ложь):
+\begin{equation*}
+    f := \forall p (p)
+\end{equation*}
+\begin{equation*}
+    t := \exists p (p)
+\end{equation*}
+
+\begin{propthm}
+    $\vdash t$
+\end{propthm}
+\begin{proof}
+    \begin{equation*}
+        \begin{array}{lll}
+            1. & \vdash \forall p (\overline{p}) \supset \overline{q \supset q} & \text{аксиома уточнения-2} \\ 
+            2. & \vdash \overline{\forall p (\overline{p})} & C\lnot'', DT \\ 
+            3. & \vdash \exists p (p) & Def
+        \end{array}
+    \end{equation*}
+\end{proof}

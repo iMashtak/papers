@@ -1,0 +1,19 @@
+name: fp-book
+template: empty
+resources: {}
+profiles:
+  main:
+    default: true
+    root: "main.tex"
+  solutions:
+    default: false
+    root: "solutions.tex"
+build-packs:
+  docker:
+    default: true
+    type: docker
+    options:
+      image: deralusws/latex-papers-template-image:1.1
+      volume: /data
+  ci:
+    type: native

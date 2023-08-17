@@ -1,0 +1,55 @@
+\section{Модель интуиционистского исчисления высказываний}
+
+В данном разделе предоставим \textit{модель} интуиционистского исчисления. Основываться она будет на трёхзначной логике, описываемой логической матрицей.
+
+\begin{definition}
+    \textit{Моделью} для $P^i$ является следующая логическая матрица:
+
+    \begin{equation*}
+        \mathbf{M} = 
+        \langle
+            \{0, \frac{1}{2}, 1\}, \cdot, +, \to, \sim
+        \rangle
+    \end{equation*}
+
+    \begin{equation*}
+        \begin{array}{ll}
+            x \cdot y = \min(x,y) 
+            &
+            x + y = \max(x,y) 
+            \\
+            x \to y = \begin{cases}
+                1 &\text{if}\ x \le y \\
+                y &\text{else}
+            \end{cases} 
+            &
+            \sim x = x \to 0 = \begin{cases}
+                1 &\text{if}\ x = 0 \\ 
+                0 &\text{else}
+            \end{cases}
+        \end{array}
+        \\
+    \end{equation*}
+\end{definition}
+
+\begin{remark}
+    Легко проверить, что все аксиомы исчисления $P^i$ являются тавтологиями в описанной логической матрице.
+\end{remark}
+
+\begin{example}
+    Попробуем в данной модели найти значение истинности формулы $A \lor \overline{A}$. Произведём оценку этой формулы: $f(A \lor \overline{A}) = A + \sim A$.
+
+    \begin{tabular}{|c|c|c|c|}\hline
+        $A$            & $\sim A$ & $A + \sim A$   \\\hline
+        $1$            & $0$      & $1$            \\\hline
+        $\sfrac{1}{2}$ & $0$      & $\sfrac{1}{2}$ \\\hline
+        $0$            & $1$      & $1$            \\\hline
+    \end{tabular}
+
+    Как видно, мы получили не тавтологию, а значит формула $A \lor \overline{A}$ не выводима в $P^i$.
+\end{example}
+
+\begin{remark}
+    Операция эквивалентности не вводится в исходном базисе исчисления $P^i$, однако для неё справедливо определение $A \equiv B := (A \supset B) \land (B \supset A)$. Таким образом, можно построить оценку для эквивалентности: $f(A \equiv B) = (A \to B) \cdot (B \to A)$.
+\end{remark}
+

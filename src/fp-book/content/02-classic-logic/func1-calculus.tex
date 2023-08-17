@@ -1,0 +1,88 @@
+\section{Классическое исчисление предикатов 1-го порядка}
+
+
+{\it Функциональное исчисление первого порядка} может содержать, помимо обозначений пропозиционального исчисления, ещё индивидные переменные и кванторы (которые так или иначе сводятся к квантору всеобщности). Существует большое количество различных формулировок функционального исчисления первого порядка, рассмотрим некоторую частную формулировку.
+
+Исходный базис исчисления $F_1$:
+\begin{itemize}
+    \item Исходные символы: $($, $)$, $\supset$, $\lnot$, $\forall$.
+    \item Индивидные переменные: $x$, $y$, $z$, $\dots$
+    \item Пропозициональные переменные: $p$, $q$, $r$, $s$, $\dots$
+    \item Предикатные переменные: $P$, $Q$, $R$, $S$, $\dots$
+\end{itemize}
+
+Правила построения:
+\begin{itemize}
+    \item Отдельно стоящая пропозициональная переменная --- ппф.
+    \item Если $F$ --- $n$-арная предикатная переменная и если $x_1,...,x_n$ --- индивидные переменные или константы, то $F(x_1,...,x_n)$ --- это ппф.
+    \item Если $\Gamma$ --- ппф, то $\lnot \Gamma$ --- ппф.
+    \item Если $\Gamma$ и $\Delta$ --- ппф, то $(\Gamma \supset \Delta)$ --- ппф.
+    \item Если $\Gamma$ --- ппф, а $x$ --- индивидная переменная, то $\forall x \Gamma$ --- ппф.
+\end{itemize}
+
+Правила вывода:
+\begin{itemize}
+    \item $\text{Modus ponens}$: $A, A \supset B \vdash B$.
+    \item Правило обобщения: $A \vdash \forall x A$.
+\end{itemize}
+
+Аксиомы представлены в виде аксиомных схем: 
+\begin{itemize}
+    \item ($K$): $A \supset (B \supset A)$
+    \item ($S$): $A \supset (B \supset C) \supset (A \supset B \supset (A \supset C))$
+    \item ($C\lnot$): $\overline{A}\supset \overline{B} \supset (B \supset A)$
+    \item (аксиома обобщения консеквента): $\forall x (A \supset B) \supset (A \supset \forall x B)$, где $x\notin FV(A)$
+    \item (аксиома уточнения): $\forall x A \supset [a/x]A$, где $a \notin BV(A)$
+\end{itemize}
+
+Мы впервые сталкиваемся с аксиомными схемами, которые связаны определенными условиями.
+Смысл двух последних аксиомных схем можно пояснить при помощи примеров.
+
+Так, одной из ппф, являющихся аксиомой в соответсвии с аксиомой обобщения консеквента будет:
+\begin{equation*}
+    \forall x (p \supset F(x)) \supset (p \supset \forall x F(x))
+\end{equation*}
+
+Однако следующая ппф не является частным случаем аксиомы обобщения консеквента:
+\begin{equation*}
+    \forall x (F(x) \supset G(x)) \supset (F(x) \supset \forall x G(x))
+\end{equation*}
+
+Частными случаями для аксиомы уточнения будут:
+\begin{gather*}
+    \forall x F(x) \supset F(y) \\
+    \forall x F(x) \supset F(x)
+\end{gather*}
+
+При этом следующие ппф не будут частным случаем аксиомы уточнения:
+\begin{gather*}
+    \forall x \forall y F(x, y) \supset \forall y F(y, y) \\
+    \forall x (F(x) \supset \forall y G(x, y)) \supset (F(y) \supset \forall y G(y, y))
+\end{gather*}
+
+Сразу введём квантор существования:
+\begin{equation*}
+    \exists x \Gamma := \overline{\forall x \overline{\Gamma}}
+\end{equation*}
+
+\begin{remark}
+    Отдельной теоремой можно было бы доказать, что все теоремы пропозиционального исчисления $P_2$ есть теоремы функционального исчисления $F_1$. Однако, это достаточно очевидно, а выписывание доказательства утомительно.
+\end{remark}
+
+Напомним, что $FV(A)$ обозначает множество свободных переменных предиката $A$. Рассмотрим подробно правила связывания переменной в предикате, а также правила подстановки индивидных переменных (данная задача не тривиальна, в отличие от случая пропозиционального исчисления).
+
+Принадлежность переменной к множеству свободных переменных (Free Variables):
+\begin{itemize}
+    \item $x\in FV(P(x_1,...,x_n))$, если $\exists i (x=x_i)$, $n\in \mathbb{N}$
+    \item $x\in FV(\overline{A})$, если $x \in FV(A)$
+    \item $x \in FV(A\supset B)$, если $x\in FV(A) \lor x\in FV(B)$
+    \item $x \in FV(\forall y A)$, если $x\in FV(A) \land x\ne y$
+\end{itemize}
+
+Принадлежность переменной к множеству связанных переменных (Bounded Variables):
+\begin{itemize}
+    \item $x\in BV(\overline{A})$, если $x \in BV(A)$
+    \item $x \in BV(A\supset B)$, если $x\in BV(A) \lor x\in BV(B)$
+    \item $x \in BV(\forall x A)$
+    \item $x \in BV(\forall y A)$ при $x\ne y$, если $x \in BV(A)$
+\end{itemize}

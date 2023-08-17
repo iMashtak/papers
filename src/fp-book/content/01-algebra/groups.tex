@@ -1,0 +1,99 @@
+\section{Группы}
+
+\begin{definition}
+    Моноид $G$, все элементы которого обратимы, называется \textit{группой}. Т.е. предполагаются выполненными следующие аксиомы:
+    \begin{enumerate}
+        \item На множестве $G$ определена бинарная операция $(x,y)\to xy$.
+        \item Операция ассоциативна: $(xy)z=x(yz)$ для всех $x,y,z\in G$.
+        \item $G$ обладает нейтральным элементом $e$: $xe=ex=x$ для всех $x\in G$.
+        \item Для каждого элемента $x\in G$ существует обратный $x^{-1}$: $xx^{-1}=x^{-1}x=e$.
+    \end{enumerate}
+\end{definition}
+
+Группа с коммутативной операцией называется коммутативной, а чаще \textit{абелевой}. Для обозначения количества элементов в группе используется символ $|G|$.
+
+\begin{definition}
+    Подмножество $H\subset G$ называется \textit{подгруппой} в $G$, если
+    \begin{itemize}
+        \item $e\in H$
+        \item $h_1,h_2\in H \Rightarrow h_1h_2\in H$
+        \item $h\in H \Rightarrow h^{-1}\in H$
+    \end{itemize}
+    Подгруппа называется \textit{собственной}, если $H\ne \{e\}$ и $H\ne G$.
+\end{definition}
+
+\begin{theorem}
+    Для любых $m,n \in \mathbb{Z}$ выполняется $a^ma^n=a^{m+n}$ и $(a^m)^n=a^{mn}$ (соответственно, $ma+na=(m+n)a$ и $n(ma)=(nm)a$).
+\end{theorem}
+
+\begin{definition}
+    Пусть $G$ --- мультипликативная группа, $a$ --- её фиксированный элемент, $e$ --- нейтральный элемент. \textit{Порядком элемента} $a$ называют наименьшее натуральное число $m$, такое что $a^m = e$. Если же, $\forall n \in \mathbb{N}$ $a^n \ne e$, то $a$ называют элементом бесконечного порядка. Обозначается символом $\mathfrak{S}(a)$.
+\end{definition}
+
+\begin{example}
+    В мультипликативной группе комплексных чисел элементы имеют различный порядок: $\mathfrak{S}(\imath) = 4$, $\mathfrak{S}(-1) = 2$, $\mathfrak{S}(1) = 1$, $\mathfrak{S}(2) = \infty$.
+\end{example}
+
+\begin{theorem}\label{theorem divmod}
+    (О делении с остатком) $\forall a, b \in \mathbb{N}\cup\{0\}\;\exists q, r \in \mathbb{Z}: n = mq + r, (0 \leq r < m)$.
+\end{theorem}
+
+\begin{theorem}\label{theorem vdots}
+    Пусть $m$ --- конечный порядок элемента $a$ мультипликативной группы. Тогда $a^n = e \iff n \ \vdots \ m$.
+\end{theorem}
+\begin{proof}
+    \textit{Необходимость}: $a^n=e$. По \ref{theorem divmod} имеем $n = mq + r$. Покажем, что $m$ делит $n$ без остатка, т.е. $r = 0$.
+    \begin{equation*}
+        a^n = a^{mq +r}= a^{mq} a^r = (a^m)^q a^r = e^q a^r = a^r = e
+    \end{equation*}
+    Т.к. $\mathfrak{S}(a) = m$ и $0 \leq r < m$, то из $a^r = e \implies r = 0$, т.е. $m$ делит $n$.
+
+
+    \textit{Достаточность}: $m$ делит $n$. Так как $m$ делит $n$, то $\exists k \in \mathbb{Z}: n = mk$.
+    \begin{equation*}
+        a^n = a^{mk} = (a^m)^k = e^k = e
+    \end{equation*}
+    Т.е. получили $a^n=e$.
+\end{proof}
+
+\begin{theorem}\label{theorem r - s}
+    Пусть $m$ --- конечный порядок элемента $a$ мультипликативной группы и $r > s$. Тогда $a^r = a^s \iff (r - s) \ \vdots \ m$
+\end{theorem}
+\begin{proof}
+    Заметим следующее:
+    \begin{equation*}
+        a^r = a^{(r-s)+s} = a^{r-s}a^s
+    \end{equation*}
+    Следовательно $a^r = a ^s \iff a^{r-s} = e$. Тогда по теореме \ref{theorem vdots} имеем $r -s \ \vdots \ m$.
+\end{proof}
+\begin{consequence}
+    Пусть $m$ --- конечный порядок элемента $a$ мультипликативной группы. Тогда $e = a^0 \neq a^1 \neq \dots \neq a^{m-1}$.
+\end{consequence}
+\begin{consequence}
+    Пусть $\mathfrak{S}(a) = \infty$. Тогда $a^r = a^s \iff r = s$.
+\end{consequence}
+
+\begin{theorem}
+    Пусть $m$ --- конечный порядок элемента $a$ мультипликативной группы. Тогда $k = \mathfrak{S}(a^n)= \frac{HOK(n,m)}{n}$.
+\end{theorem}
+\begin{proof}
+    \begin{equation*}
+        \begin{gathered}
+            (a^n)^k = e \iff nk\ \vdots \ m \\
+            p = nk: p \ \vdots\ m \land p \ \vdots\ n \implies p = HOK(n, m) \implies k = \frac{HOK(n, m)}{n}
+        \end{gathered}
+    \end{equation*}
+\end{proof}
+
+\begin{theorem}
+    Пусть $m$ --- конечный порядок элемента $a$, $n$ --- конечный порядок элемента $b$ коммутативной мультипликативной группы.
+    Тогда $k = \mathfrak{S}(ab) = HOK(n, m)$
+\end{theorem}
+\begin{proof}
+    \begin{equation*}
+        \begin{gathered}
+            e  = (ab)^k  = a^kb^k\\
+            k\ \vdots \ m \land k\ \vdots \ n  \implies k = HOK(n, m)
+        \end{gathered}
+    \end{equation*}
+\end{proof}

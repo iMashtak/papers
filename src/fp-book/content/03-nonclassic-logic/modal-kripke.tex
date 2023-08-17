@@ -1,0 +1,207 @@
+\section{Модель Крипке}
+
+Исходный базис модальной логики:
+\begin{itemize}
+    \item Исходные символы: $($, $)$, $\lnot$, $\lor$, $\Diamond$.
+    \item Переменные ($PV$): $p$, $q$, $r$, $s$, \dots
+\end{itemize}
+
+Правила построения формул:
+
+\begin{itemize}
+    \item Стоящая отдельно переменная --- ппф.
+    \item Если $A$ --- ппф, то и $\lnot A $ --- ппф.
+    \item Если $A$ --- ппф, то и $\Diamond A $ --- ппф.
+    \item Если $A$ и $B$ --- ппф, то и $( A \lor B )$ --- ппф.
+\end{itemize}
+
+Сразу введем некоторые определения:
+
+\begin{itemize}
+    \item $ a \land b := \overline{\overline{a} \lor \overline{b}} $
+    \item $ a \supset b := \overline{a} \lor b $
+    \item $ a \equiv b := (a \supset b) \land (b \supset a) $
+    \item $ \Box a := \overline{\Diamond \overline{a}}$
+    \item $ \top := p \lor \overline{p}$
+    \item $ \bot := p \land \overline{p}$
+\end{itemize}
+
+\begin{definition}
+    \textit{Шкалой Крипке}, или просто шкалой, называется пара $F = (W,R)$,
+    где $W$ --- непустое множество и $R$ --- бинарное отношение на $W$.
+    Можно говорить, что шкала Крипке является графом, вершинами в котором являются элементы множества $W$, а дуги определяются из отношения между вершинами $R$.
+\end{definition}
+
+\begin{definition}
+    \textit{Оценкой} на шкале $F$ называется отображение $\theta$ : $PV \to  P(W)$,
+    то есть $\theta(p) \subseteq W$ для всякой переменной $p \in PV$.
+\end{definition}
+
+\begin{definition}
+    \textit{Модель Крипке} $M$ — это шкала с оценкой, т.е. пара вида ($F$, $\theta$).
+\end{definition}
+
+\begin{remark}
+    Множество $W$ называется \textit{носителем} $F$ и $M$,а отношение $R$ называется \textit{отношением достижимости} $F$ и $M$.
+\end{remark}
+
+Истинность модальных формул в модели Крипке $M = (F,\theta)$ определяется
+индукцией по длине формулы.
+
+\begin{remark}
+    $M,w \models \phi$ , читается как <<формула $\phi$ истинна в точке $w$ модели $M$>>.
+\end{remark}
+
+\begin{equation*}
+    \begin{array}{l c l}
+        M,w \models p & \rightleftharpoons & w \in \theta(p) \\
+        M,w \models \overline{p} & \rightleftharpoons & M,w \not\models p  \\
+        M,w \models a \lor b & \rightleftharpoons &
+            M,w \models a \text{ или } M,w \models b \\
+        M,w \models \Diamond p & \rightleftharpoons &
+            \exists v (wRv \land M, v \models p )  \\
+    \end{array}
+\end{equation*}
+
+Из этих определений немедленно следует:
+
+\begin{equation*}
+    \begin{array}{l c l}
+        M,w \models a \land b & \rightleftharpoons &
+            M,w \models a \text{ и } M,w \models b \\
+        M,w \models a \supset b & \rightleftharpoons &
+            M,w \not\models a \text{ или } M,w \models b \\
+        M,w \models \top  & & \\
+        M,w \not\models \bot  & & \\
+        M,w \models \Box p & \rightleftharpoons &
+            \forall v (wRv \supset M, v \models p )  \\
+    \end{array}
+\end{equation*}
+
+\begin{definition}
+    Формула $A$ \textit{истинна в модели} $M$ тогда и только тогда, когда $\forall w \in W: M,w \models A$.
+    Обозначение: $M \models A$.
+\end{definition}
+\begin{definition}
+    Формула $A$ общезначима в шкале $F$ тогда и только тогда $\forall M = (F, \theta)$:
+    $M \models p$
+\end{definition}
+
+\begin{remark}
+    Будем использовать следующую запись: $R(x) = \{y | xRy \}$ --- для обозначения множества достижимых из точки $x$ точек множества $W$.
+\end{remark}
+
+\begin{figure}[ht]
+\begin{center}
+    \begin{tikzpicture}[modal,node distance = 20mm]
+        \node[world] (a) [label=left:{$\{p\}$}]{$a$};
+        \node[world] (b) [label=right:{$\{p, q\}$}][above right=of a] {$b$};
+        \node[world] (c) [label=right:{$\{p\}$}][below right=of a] {$c$};
+        \path[->] (a) edge node[above left] {$R$} (b);
+        \path[->] (a) edge node[below left] {$R$} (c);
+        \path[->] (b) edge node[right] {$R$} (c);
+        \path[->] (c) edge[reflexive below] node[below] {$R$} (c);
+        \path[->] (b) edge[reflexive above] node[above] {$R$} (b);
+    \end{tikzpicture}
+\end{center}
+\caption{Шкала Крипке}
+\label{Picture:KripkeExample1}
+\end{figure}
+
+\begin{example}
+    Пусть для некоторой шкалы Крипке выполняется $\theta(p) = \{ a, b, c \}$ и $\theta(q) = \{ b \}$.
+
+    Возьмём шкалу, изображённую на рисунке \ref{Picture:KripkeExample1}.
+    \begin{enumerate}
+        \item $R(a) = \{b, c\}$
+        \item $R(b) = \{b, c\}$
+        \item $R(c) = \{c\}$
+    \end{enumerate}
+
+
+    Посмотрим, какие формулы модальной логики будут истинными в точках выбранной шкалы Крипке.
+
+    \begin{enumerate}
+        \item $M, a \models \Box p, \Box p \supset \Box \Box p, \Diamond p
+            \supset \Diamond \Box p, \dots $
+        \item $M, b \models \Box p \supset p, \Box q \supset q, \dots$
+        \item $M, c \models \Box p \supset p, \dots$
+        \item $M \models \Box p \supset \Diamond p, \dots$
+    \end{enumerate}
+\end{example}
+
+\begin{figure}[ht]
+    \begin{center}
+        \begin{tikzpicture}[modal,node distance = 20mm]
+            \node[world] (1) [label=below:{$q$}] {$1$};
+            \node[world] (2) [label=above:{$p,q$}] [right=of 1]{$2$};
+            \node[world] (3) [label=above:{$p$}] [above right=of 2]{$3$};
+            \node[world] (4) [label=below:{$p,q$}] [below right=of 2]{$4$};
+            \node[world] (5) [label=below:{$p,q$}] [above right=of 4]{$5$};
+            \node[world] (6) [label=below:{$q$}] [below right=of 4]{$6$};
+            \node[world] (7) [label=above:{$p,q$}] [right=of 5] {$7$};
+            \node[world] (8) [label=above:{$p$}][right=of 7]{$8$};
+            \path[->] (1) edge (2);
+            \path[->] (2) edge (3);
+            \path[->] (2) edge (4);
+            \path[->] (4) edge (6);
+            \path[->] (6) edge (8);
+            \path[->] (4) edge (5);
+            \path[->] (5) edge (7);
+            \path[->] (3) edge (7);
+            \path[->] (7) edge (8);
+        \end{tikzpicture}
+    \end{center}
+    \caption{Шкала Крипке}
+    \label{Picture:KripkeExample2}
+\end{figure}
+
+\begin{example}
+    Возьмём шкалу, изображённую на рисунке \ref{Picture:KripkeExample2}.  Изображённое на нём отношение достижимости антисимметрично, иррефлексивно и интранзитивно.
+
+    Проверим истинность следующих двух высказываний:
+    \begin{itemize}
+        \item $\Box \Diamond (\overline{\overline{p}} \supset q)$
+        \item $\Diamond \Box (\overline{\overline{p}} \supset q)$
+    \end{itemize}
+
+    Выпишем оценки переменных $p$ и $q$:
+    \begin{itemize}
+        \item $\theta(p) = \{2, 3, 4, 5, 7, 8 \}$
+        \item $\theta(q) = \{1, 2, 4, 5, 6, 7 \}$
+    \end{itemize}
+
+    \begin{center}
+        \begin{tabular}{|l|c|c|c|c|c|c|c|c|}\hline
+            & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+            $p$ & & + & + & + & + & & + & +  \\ \hline
+            $q$ & + & + & & + & + & + & + &  \\ \hline
+            $p \supset q$ & + & + & & + & + & + & + &  \\ \hline
+            $\Diamond (p \supset q)$ & + & + & + & + & + & & &  \\ \hline
+            $\Box (p \supset q)$ & + & & + & + & + & & & +  \\ \hline
+            $\Box \Diamond (p \supset q)$ & + & + & & & & & & +  \\ \hline
+            $\Diamond \Box (p \supset q)$ & & + & & + & & + & + &  \\ \hline
+        \end{tabular}
+    \end{center}
+
+    Последовательно в таблицу будем записывать символ <<+>>, если формула истинна в данной точке. Первая и вторая строка аналогичны оценкам переменных. Третья строка заполняется по таблице истинности импликации, эта операция не зависит от вида шкалы Крипке. Далее нам для удобства потребуется выписать полностью отношение достижимости:
+
+    \begin{itemize}
+        \item $R(1)=\{2\}$
+        \item $R(2)=\{3,4\}$
+        \item $R(3)=\{7\}$
+        \item $R(4)=\{5,6\}$
+        \item $R(5)=\{7\}$
+        \item $R(6)=\{8\}$
+        \item $R(7)=\{8\}$
+        \item $R(8)=\emptyset$
+    \end{itemize}
+
+    Итак, для того, чтобы формула $\Diamond(p \supset q)$ была истинна в некоторой точке, необходимо, чтобы формула $p \supset q$ была истинной хотя бы в одной из достижимых точек. В то же время, для того, чтобы формула $\Box(p \supset q)$ была истинной в некоторой точке, необходимо, чтобы формула $p \supset q$ была истинной во всех достижимых точках. Исходя из выписанного отношения достижимости и описанных выше правил заполняются остальные строки таблицы.
+
+    Таким образом, получили таблицу истинности для двух формул.
+\end{example}
+
+\begin{remark}
+    Рассматриваемое в примере отношение достижимости имело свойства антисимметричности, иррефлексивности и интранзитивности, что полностью совпадало с рисунком. Однако удобно представлять шкалу Крипке в виде графа, в уже словами дополнять, что отношение достижимости, например, рефлексивно. Это будет означать, что к каждой вершине графа необходимо добавить рефлексивную дугу. Так можно не засорять рисунок, но в то же время, следует полностью выписывать отношение достижимости.
+\end{remark}

@@ -1,0 +1,79 @@
+{
+    "supset": {
+        "prefix": "\\supset",
+        "body": "\\supset"
+    },
+    "overline": {
+        "prefix": "\\overline",
+        "body": "\\overline{$0}"
+    },
+    "proof": {
+        "prefix": "\\proof",
+        "body": [
+            "\\begin{array}{llr}",
+            "    $0",
+            "\\end{array}"
+        ]
+    },
+    "proofitem": {
+        "prefix": "\\itemproof",
+        "body": [
+            "$1.  & $0",
+            "    & ",
+            "    \\\\\\"
+        ]
+    },
+    "proofseq": {
+        "prefix": "\\seqproof",
+        "body": [
+            "\\begin{array}{c}",
+            "    $0",
+            "    \\\\\\",
+            "\\end{array}"
+        ]
+    },
+    "proofdiv": {
+        "prefix": "\\divproof",
+        "body": [
+            "\\begin{array}{c|c}",
+            "    $0",
+            "\\end{array}",
+        ]
+    },
+    "half": {
+        "prefix": "\\half",
+        "body": "\\sfrac{1}{2}"
+    },
+    "linemath": {
+        "prefix": "ml",
+        "body": "$$0$"
+    },
+    "centermath": {
+        "prefix": "mm",
+        "body": [
+            "\\begin{equation*}",
+            "    $0",
+            "\\end{equation*}"
+        ]
+    },
+    "image": {
+        "prefix": "image",
+        "body": [
+            "\\begin{figure}[ht]",
+            "\t\\begin{center}",
+            "\t\t$0",
+            "\t\\end{center}",
+            "\t\\caption{$2}",
+            "\t\\label{Picture:$1}",
+            "\\end{figure}"
+        ]
+    },
+    "diamond": {
+        "prefix": "\\romb",
+        "body": "\\Diamond"
+    },
+    "box": {
+        "prefix": "\\box",
+        "body": "\\Box"
+    }
+}

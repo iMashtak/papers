@@ -1,0 +1,32 @@
+\section{Связь классического и интуиционистского исчислений высказываний}
+
+\begin{lemma}
+    Если формулы $\overline{\overline{A \supset B}}$ и $\overline{\overline{A}}$ выводимы в $P^i$, то формула $\overline{\overline{B}}$ также выводима в $P^i$.
+\end{lemma}
+
+\begin{theorem}
+    \textbf{(Гливенко).} Если пропозициональная формула $F$ выводима в классическом исчислении высказываний $P$ (любом), то формула $\overline{\overline{F}}$ выводима в интуиционистском исчислении высказываний $P^i$.
+\end{theorem}
+
+\begin{theorem}\label{BaseTheorem:IntuitTransform}
+    Формула $A$ классического исчисления выводима тогда и только тогда, когда формула $A^*$ выводима в интуиционистском исчислении (высказываний/предикатов).
+
+    Операция $\cdot^*$ определяется следующим образом:
+
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Обозначение &$A$ & $A^*$ \\
+        \hline
+        $\text{atom}$ &$B$ -- атом & $\overline{\overline{B}}$ \\
+        $\lambda$ &$B \ \lambda\ C$ & $\overline{\overline{B^*\ \lambda\ C^*}}$ \\
+        $\lnot$ & $\overline{B}$ & $\overline{B^*}$ \\
+        $\kappa$ &$\kappa xB$ & $\overline{\overline{\kappa x B^*}}$ \\
+        \hline
+    \end{tabular}
+
+    где $\lambda \in \{\supset, \lor, \land\}$, $\kappa \in \{\forall, \exists\}$.
+\end{theorem}
+
+\begin{remark}
+    Столбец "обозначение" описывает, каким образом необходимо обозначать шаг преобразования при оформлении доказательств теорем. В силу тривиальности, шаг $\lnot$ можно опускать.
+\end{remark}

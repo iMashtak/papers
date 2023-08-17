@@ -1,0 +1,18 @@
+\section{Теорема дедукции для исчисления предикатов}
+
+\begin{theorem}
+    (Теорема дедукции.) Если $A_1,...,A_{n-1},A_n \vdash B$, то $A_1,...,A_{n-1} \vdash A_n \supset B$.
+\end{theorem}
+\begin{proof}
+    Данная теорема доказывается аналогично теореме дедукции для исчисления высказываний, однако необходимо рассмотреть следующий случай, связанный с наличием кванторов в исчислении:
+    \begin{enumerate}
+        \item[6)] $B_i$ получено по правилу обобщения из $B_j$, где $j<i$. Тогда $B_i=\forall x B_j$, где $x$ --- индивидная переменная, не входящая в качестве свободной переменной в формулы $A_1,...,A_i$. Тогда по аксиоме обобщения консеквента имеем:
+        \begin{equation*}
+            \vdash \forall x (A_n \supset B_j) \supset (A_n \supset \forall x B_j)
+        \end{equation*}
+        \begin{equation*}
+            \vdash \forall x (A_n \supset B_j) \supset (A_n \supset B_i)
+        \end{equation*}
+        По предположению индукции в выводе уже записана формула $A_n \supset B_j$, поэтому по правилу обобщения можем записать $\forall x (A_n \supset B_j)$. Затем по $\text{modus ponens}$ получаем $\vdash A_n \supset B_i$. \qedhere
+    \end{enumerate}
+\end{proof}

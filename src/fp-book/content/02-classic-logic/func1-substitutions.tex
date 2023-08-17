@@ -1,0 +1,97 @@
+\section{Подстановки и замены переменных в функциональном исчислении}
+
+В ходе доказательств нам необходимо производить различные подстановки. Так как в исчислении $F_1$ появились новые понятия: индивидные переменные, связанные, свободные переменные --- то нужно аккуратно выписать правила подстановки, связанные с ними.
+
+\begin{itemize}
+    \item Правила алфавитной замены переменной:
+    \begin{enumerate}
+        \item $\widetilde{[y/x]}z = z$
+        \item $\widetilde{[y/x]}P(z_1, z_2, ..., z_n)=P(z_1, z_2, ...,z_n)$
+        \item $\widetilde{[y/x]}\overline{A} = \overline{A}$
+        \item $\widetilde{[y/x]}(A \supset B)=A \supset B$
+        \item $\widetilde{[y/x]}\forall x A = \forall y [y/x]A$, если $y \notin A$
+        \item $\widetilde{[y/x]}\forall y A = \forall y A$, если $y \ne x$ и $y \notin A$
+    \end{enumerate}
+    Алфавитная замена действует только на формулы вида $\forall x A$. То есть, мы с помощью такой замены можем менять имена связанных переменных в формулах.
+
+    \item Правила подстановки индивидной переменной или константы $a$ вместо индивидной переменной $x$ в формулу:
+    \begin{enumerate}
+        \item $[a/x]x=a$
+        \item $[a/x]y=y$, если $x\ne y$
+        \item $[a/x]P(y_1,...,y_n)=P([a/x]y_1,...,[a/x]y_n)$
+        \item $[a/x]\overline{A}=\overline{[a/x]A}$
+        \item $[a/x]A\supset B=[a/x]A \supset [a/x]B$
+        \item $[a/x]\forall x A=\forall x A$
+        \item $[a/x]\forall y A=\forall y ([a/x]A)$, если $x\ne y \land a\ne y$
+        \item $[a/x]\forall y A=\forall y' ([a/x]([y'/y]A))$, если $a=y$, причём $y'\notin FV(A)$ и $y'\ne x$
+    \end{enumerate}
+    С помощью такой подстановки мы можем менять имена свободных переменных в формулах.
+
+    Замечание по последнему правилу: можно сказать, что данное правило требует провести алфавитную замену $y$ на некоторую $y' \notin FV(A)$ и только после этого проводить подстановку индивидной переменной в $A$.
+\end{itemize}
+
+\begin{example}
+    Рассмотрим простой пример подстановки:
+
+    \begin{equation*}
+        [y/x,a/y](\forall x P(x,y) \supset Q(x, x, y) \land R(y))
+    \end{equation*}
+
+    По правилам подстановки индивидной переменной в формулу:
+
+    \begin{equation*}
+        \begin{array}{ll}
+            1. & [y/x,a/y](\forall x P(x,y)) \supset [y/x,a/y]Q(x, x, y) \land [y/x,a/y]R(y)
+            \\
+            2. & \forall x P(x,a) \supset Q(y,y,a) \land R(a)
+        \end{array}
+    \end{equation*}
+
+\end{example}
+
+\begin{example}
+    Рассмотрим теперь вариант, когда происходит конфликт имён переменных:
+
+    \begin{equation*}
+        [z/x, x/y, y/z](\forall x P(x) \supset \forall y \forall z Q(x,y,z))
+    \end{equation*}
+
+    \begin{equation*}
+        \begin{array}{ll}
+            1. & [z/x, x/y, y/z](\forall x P(x)) \supset [z/x, x/y, y/z](\forall y \forall z Q(x,y,z))
+            \\
+            2. & \forall x P(x) \supset \forall y' \forall z' ([z/x, x/y, y/z]Q(x,y',z'))
+            \\
+            3. & \forall x P(x) \supset \forall y' \forall z' Q(z, y', z')
+        \end{array}
+    \end{equation*}
+\end{example}
+
+В дополнение в вышесказанному, в функциональных исчислениях вводится понятие функциональных переменных. Опишем правила, по которым производится подстановка вместо них. Пусть $C$ --- некоторая произвольная формула, а $P(x_1,\dots,x_n)$ --- функциональная переменная, вместо которой мы совершаем подстановку.
+
+\begin{enumerate}
+    \item $[C/P(x_1,\dots,x_n)]P(a_1,\dots,a_n)=[a_1/x_1,\dots,a_n/x_n]C$
+    \item $[C/P(x_1,\dots,x_n)]Q(a_1,\dots,a_n)=Q(a_1,\dots,a_n)$, если $P\ne Q$
+    \item $[C/P(x_1,\dots,x_n)](A \supset B)=[C/P(x_1,\dots,x_n)]A \supset [C/P(x_1,\dots,x_n)]B$
+    \item $[C/P(x_1,\dots,x_n)]\overline{A} = \overline{[C/P(x_1,\dots,x_n)]A}$
+    \item $[C/P(x_1,\dots,x_n)]\forall x A = \forall x [C/P(x_1,\dots,x_n)]A$, если $x \notin FV(C)$
+    \item $[C/P(x_1,\dots,x_n)]\forall y A = \forall y' [C/P(x_1,\dots,x_n)] [y'/y]A$, если $y \in FV(C)$, причём $y' \notin FV(C)$
+\end{enumerate}
+
+Аналогично, в последнем правиле неявно используется алфавитная замена переменной.
+
+\begin{example}
+    Рассмотрим подстановку вместо функциональной переменной:
+
+    \begin{equation*}
+        [P(x) \land R(y)/Q(x,y)](Q(x,y) \supset Q(y,x) \supset R(x))
+    \end{equation*}
+    \begin{equation*}
+        \begin{array}{ll}
+            1. & [P(x) \land R(y)/Q(x,y)]Q(x,y) \supset [P(x) \land R(y)/Q(x,y)]Q(y,x) \supset R(x)
+            \\
+            2. & (P(x) \land R(y)) \supset (P(y) \land R(x)) \supset R(x)
+        \end{array}
+    \end{equation*}
+
+\end{example}

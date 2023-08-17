@@ -1,0 +1,123 @@
+\section*{Задачи}\addcontentsline{toc}{section}{Задачи}
+
+\begin{task}\label{Theorem:I-int}
+    Доказать в интуиционистском исчислении высказываний ($I\lnot$): $A \supset \overline{\overline{A}}$
+\end{task}
+\begin{solution}
+    Первым делом, проверим истинность:
+    \begin{equation*}
+        \begin{array}{|c|c|c|c|c|}\hline
+            A            & \sim A & \sim \sim A & A \to \sim\sim A \\\hline
+            1            & 0      & 1           & 1 \\\hline
+            \frac{1}{2}  & 0      & 1           & 1 \\\hline
+            0            & 1      & 0           & 1 \\\hline
+        \end{array}
+    \end{equation*}
+    Доказательство существует. Имеется 2 аксиомы, работающие с отрицаниями: $RdAb$ и $K\lnot$. Их и используем:
+    \begin{equation*}
+    \begin{array}{llr}
+        1.  & \vdash A \supset B \supset (A \supset \overline{B} \supset \overline{A})
+            & RdAb
+            \\
+        2.  & \overline{A} \supset B \vdash \overline{A} \supset \overline{B} \supset \overline{\overline{A}} 
+            & [\overline{A}/A]MP(1)
+            \\
+        3.  & \vdash A \supset (\overline{A} \supset B)
+            & K\lnot
+            \\
+        4.  & A \vdash \overline{A} \supset B
+            & MP(3)
+            \\
+        5.  & A \vdash \overline{A} \supset \overline{B}
+            & [\overline{B}/B]4
+            \\
+        6.  & A \vdash \overline{A} \supset B \supset \overline{\overline{A}}
+            & TD(MP(5,2))
+            \\
+        7.  & A, A \vdash \overline{\overline{A}}
+            & MP(4,6)
+            \\
+        8.  & \vdash A \supset \overline{\overline{A}}
+            & TD(7)
+            \\
+    \end{array}
+    \end{equation*}
+\end{solution}
+
+\begin{task}
+    Доказать в интуиционистском исчислении высказываний $\overline{\overline{\overline{\overline{A}} \supset \overline{\overline{B}}}} \supset \overline{\overline{\overline{A} \supset \overline{\overline{B}} \supset \overline{\overline{B}}}}$
+\end{task}
+\begin{solution}
+    Теорема \ref{BaseTheorem:IntuitTransform} имеет вид "тогда и только тогда", это означает, что мы можем осуществлять преобразование $\cdot^*$ в обе стороны. Обозначим формулу, которую нам надо доказать как $F^*$, она принадлежит исчислению $P^i$. Тогда $F$ принадлежит исчислению $P_2$. Опишем переход к $F$:
+    \begin{equation*}
+    \begin{array}{llr}
+        1.  & 
+            \overline{\overline{
+                \underbracket{\overline{\overline{A}}} 
+                \supset 
+                \underbracket{\overline{\overline{B}}}
+            }} 
+            \supset 
+            \overline{\overline{
+                \overline{A} 
+                \supset 
+                \underbracket{\overline{\overline{B}}} 
+                \supset 
+                \underbracket{\overline{\overline{B}}}
+            }}
+            & \text{atom}
+            \\
+        2.  & \underbracket{\overline{\overline{A \supset B}}} \supset \underbracket{\overline{\overline{\overline{A} \supset B \supset B}}}
+            & \supset
+            \\
+        3.  & A \supset B \supset (\overline{A} \supset B \supset B)
+            & \checkmark
+            \\
+    \end{array}
+    \end{equation*}
+    Получили, что $F$ --- это $A \supset B \supset (\overline{A} \supset B \supset B)$. Теперь осталось привести доказательство этой теоремы в исчислении $P_2$.
+\end{solution}
+
+\begin{task}
+    Доказать: $\vdash p \supset \Diamond p$
+\end{task}
+\begin{solution}
+    В данном выводе используется аксиома $R\Box$, значит данная теорема выполнима в исчислении $S3$, то есть на любых рефлексивных шкалах Крипке.
+    \begin{equation*}
+        \begin{array}{llr}
+            1.  & \vdash p \supset q \supset (\overline{q} \supset \overline{p})
+                & C\lnot'
+                \\
+            2.  & \vdash \Box \overline{p} \supset \overline{p} \supset (\overline{\overline{p}} \supset \overline{\Box \overline{p}})
+                & [\Box\overline{p}/p, \overline{p}/q]1
+                \\
+            3.  & \vdash \Box p \supset p
+                & R\Box
+                \\
+            4.  & \vdash \Box \overline{p} \supset \overline{p}
+                & [\overline{p}/p]3
+                \\
+            5.  & \vdash \overline{\overline{p}} \supset \overline{\Box\overline{p}}
+                & MP(4,2)
+                \\
+            6.  & \vdash p \supset \overline{\Box\overline{p}}
+                & ES(\equiv^{\lnot}, 5)
+                \\
+            7.  & \vdash p \supset \Diamond p
+                & Def_{\Diamond}(6)
+                \\
+        \end{array}
+    \end{equation*}
+\end{solution}
+
+\begin{task}
+    Доказать: $\vdash \Box p \supset \Diamond p$
+\end{task}
+
+\begin{task}
+    Доказать: $\vdash \Box(p \land q) \equiv (\Box p \land \Box q)$
+\end{task}
+
+\begin{task}
+    Доказать: $\vdash \Box p \supset \Box \Box p \equiv \Diamond \Diamond p \supset \Diamond p $
+\end{task}

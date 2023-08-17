@@ -1,0 +1,104 @@
+\section{Теорема о подстановочности эквивалентности дл исчисления предикатов}
+
+Определим операцию подстановки подформулы $N$ вместо подформулы $M$ в формулу $A$:
+\begin{itemize}
+    \item $[N/M]A=A$, если $M\notin A$
+    \item $[N/M]M=N$
+    \item $[N/M]A\supset B=[N/M]A \supset [N/M]B$
+    \item $[N/M]\overline{A}=\overline{[N/M]A}$
+    \item $[N/M]\forall x A=\forall x [N/M]A$
+\end{itemize}
+
+Определим $[N/M]^*A$ как операцию, при которой замещаются не обязательно все вхождения $M$ в $A$. 
+
+\begin{theorem}
+    (Подстановочность эквивалентности.) Пусть $B=[N/M]^*A$ и пусть $x_1,...,x_n$ --- набор таких индивидных переменных, что переменные из $\left(FV(M) \cup FV(N)\right) \cap BV(A)$ содержатся в этом наборе. Тогда $\vdash \forall x_1,...,x_n (M \equiv N) \supset (A \equiv B)$.
+\end{theorem}
+\begin{proof}
+    Используем математическую индукцию по структуре формулы. Так, $A$ может иметь вид либо $A_1\supset A_2$, либо $\overline{A_1}$, либо $\forall y A_1$. При этом будем считать, что для $A_1$ и $A_2$ теорема доказана.
+
+    Прежде, рассмотрим тривиальные случаи (базис индукции):
+    \begin{itemize}
+        \item $N$ подставляется вместо нуля вхождений $M$ в $A$. В этом случае $B$ совпадает с $A$ и теорема выполняется.
+        \item $M$ совпадает с $A$. В этом случае производится одна подстановка и в целом $B$ есть $N$. Теорема выполняется по закону рефлексивности импликации и правилу обобщения.
+    \end{itemize}
+    
+    Теперь рассмотрим структуру формулы:
+    \begin{itemize}
+        \item $A=A_1\supset A_2$. В этом случае $B=B_1\supset B_2$, где $B_1$ и $B_2$ получаются подстановкой $N$ вместо нуля или большего числа вхождений $M$ в $A_1$ и $A_2$ соответственно. Тогда нам требуется доказать утверждение:
+        \begin{equation*}
+            \forall x_1,...,x_n (M\equiv N) \supset ((A_1 \supset A_2) \equiv (B_1 \supset B_2))
+        \end{equation*} 
+        По предположению индукции:
+        \begin{equation*}
+            \vdash \forall x_1,...,x_n (M\equiv N) \supset (A_1 \equiv B_1)
+        \end{equation*}
+        \begin{equation*}
+            \vdash \forall x_1,...,x_n (M\equiv N) \supset (A_2 \equiv B_2)
+        \end{equation*}
+        Для упрощения не будем в выводе записывать $\forall x_1,...,x_n (M\equiv N)$ в качестве посылки, будем считать это контекстом. Для примера докажем один случай: $(A_1 \supset A_2) \supset (B_1 \supset B_2)$.
+        
+        \begin{equation*}
+            \begin{array}{lll}
+                1. & \vdash A_1 \supset B_1 & \text{по условию} \\ 
+                2. & \vdash A_2 \supset B_2 & \text{по условию} \\
+                3. & \vdash B_1 \supset A_1 & \text{по условию} \\
+                4. & \vdash B_2 \supset A_2 & \text{по условию} \\
+                5. & \vdash (B_1 \supset A_1) \supset ((A_1 \supset B_2)\supset(B_1 \supset B_2)) & B \\ 
+                6. & \vdash (A_1 \supset B_2)\supset(B_1 \supset B_2) & MP(3, 5) \\ 
+                7. & \vdash (A_1 \supset (B_1 \supset B_2)) \supset ((A_1 \supset B_1) \supset (A_1 \supset B_2)) & S \\ 
+                8. & A_1 \supset (B_1 \supset B_2) \vdash (A_1 \supset B_1) \supset (A_1 \supset B_2) & MP(7) \\ 
+                9. & A_1 \supset (B_1 \supset B_2) \vdash A_1 \supset B_2 & MP(1, 8) \\ 
+                10. & A_1 \supset (B_1 \supset B_2) \vdash B_1 \supset B_2 & MP(9, 6) \\ 
+                11. & \vdash (A \supset B) \supset ((B\supset C) \supset (A \supset C)) & B' \\ 
+                12. & \vdash (A_1 \supset A_2) \supset ((A_2\supset (B_1 \supset B_2)) \supset (A_1 \supset (B_1 \supset B_2))) & [...]B' \\ 
+                13. & A_1 \supset A_2, A_2\supset (B_1 \supset B_2) \vdash A_1 \supset (B_1 \supset B_2) & MP(12) \\ 
+                14. & A_1 \supset A_2, A_2\supset (B_1 \supset B_2) \vdash B_1 \supset B_2 & MP(13, 10) \\ 
+                15. & A_2\supset (B_1 \supset B_2) \vdash (A_1 \supset A_2) \supset (B_1 \supset B_2) & DT(14) \\ 
+                16. & \vdash B_2 \supset (B_1 \supset B_2) & K \\ 
+                17. & A_2 \vdash B_1 \supset B_2 & MP(2, 16) \\ 
+                18. & \vdash A_2 \supset (B_1 \supset B_2) & DT(17) \\ 
+                19. & \vdash (A_1 \supset A_2) \supset (B_1 \supset B_2) & MP(18, 15)
+            \end{array}
+        \end{equation*}
+        Аналогичным способом доказывается $(B_1 \supset B_2) \supset (A_1 \supset A_2)$.
+
+        \item $A=\overline{A_1}$. В этом случае $B=\overline{B_1}$, где $B_1$ получается подстановкой $N$ вместо нуля или большего числа вхождений $M$ в $A_1$. Тогда нам требуется доказать утверждение:
+        \begin{equation*}
+            \forall x_1,...,x_n (M\equiv N) \supset (\overline{A_1}\equiv\overline{B_1})
+        \end{equation*} 
+        По предположению индукции известно, что:
+        \begin{equation*}
+            \vdash \forall x_1,...,x_n (M\equiv N) \supset (A_1 \equiv B_1)
+        \end{equation*}
+        Доказать это утверждение очень просто:
+        \begin{equation*}
+            \begin{array}{lll}
+                1. & \vdash A_1 \supset B_1 & \text{по условию} \\ 
+                2. & \vdash B_1 \supset A_1 & \text{по условию} \\
+                3. & \vdash (A \supset B) \supset (\overline{B} \supset \overline{A}) & C\lnot' \\ 
+                4. & \vdash (A_1 \supset B_1) \supset (\overline{B_1} \supset \overline{A_1}) & [...]C\lnot' \\ 
+                5. & \vdash \overline{B_1} \supset \overline{A_1} & MP(1, 4) \\ 
+                6. & \vdash (B_1 \supset A_1) \supset (\overline{A_1} \supset \overline{B_1}) & [...]C\lnot' \\ 
+                7. & \vdash \overline{A_1} \supset \overline{B_1} & MP(2, 6)
+            \end{array}
+        \end{equation*}
+
+        \item $A=\forall y A_1$. Тогда $B=\forall y B_1$, где $B_1$ получается подстановкой $N$ вместо нуля или большего числа вхождений $M$ в $A_1$. Тогда нам требуется доказать утверждение:
+        \begin{equation*}
+            \forall x_1,...,x_n (M\equiv N) \supset (\forall y A_1\equiv\forall y B_1)
+        \end{equation*} 
+        По предположению индукции известно, что:
+        \begin{equation*}
+            \vdash \forall x_1,...,x_n (M\equiv N) \supset (A_1 \equiv B_1)
+        \end{equation*}
+        Доказательство этого утверждения вытекает из правила обобщения по $y$ и путём применения аксиомы обобщения консеквента дважды. \qedhere
+    \end{itemize}
+\end{proof}
+
+\begin{consequence}
+    Если $B=[N/M]^*A$ и $\vdash M \equiv N$, то $\vdash A \equiv B$.
+\end{consequence}
+\begin{consequence}
+    Если $B=[N/M]^*A$, $\vdash M \equiv N$ и $\vdash A$, то $\vdash B$.
+\end{consequence}

@@ -1,0 +1,25 @@
+{
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.bibtex-format.sort.enabled": true,
+    "latex-workshop.bibtex-format.tab": "4 spaces",
+    "latex-workshop.latex.outDir": "%DIR%/out",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "using lpt",
+            "tools": [
+                "lpt"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "lpt",
+            "command": "bash",
+            "args": [
+                "-c",
+                "$(cat ./../../.lpt-name) document build '[file]:%DOC%'"
+            ]
+        }
+    ],
+    "editor.wordWrap": "on"
+}

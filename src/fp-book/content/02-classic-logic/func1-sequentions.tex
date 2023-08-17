@@ -1,0 +1,116 @@
+\section{Исчисление секвенций для предикатов}
+
+Аналогично исчислению секвенций для высказываний можно сформулировать исчисление секвенций для предикатов. Правила вывода для логических связок работают так же, как и в исчислении $LK$, но добавляются правила вывода для кванторов.
+
+Правила вывода (логические):
+\begin{itemize}
+    \item Правила введения квантора всеобщности:
+    \begin{equation*}
+        \frac{\Gamma,  \forall x F(x), F(t) \vdash \Delta}{\Gamma, \forall x F(x) \vdash \Delta} \tag{$\forall_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma \vdash F(y),  \Delta}{\Gamma \vdash \forall x F(x), \Delta} \tag{$\forall_R$}
+    \end{equation*}
+    Здесь $t$ --- произвольная переменная. В то же время $c$ --- переменная, не содержащаяся в формулах из $\Gamma$, $\Delta$.
+
+    \item Правила введения квантора существования:
+    \begin{equation*}
+        \frac{\Gamma,  F(y) \vdash \Delta}{\Gamma, \exists x F(x) \vdash \Delta} \tag{$\exists_L$}
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma \vdash F(t), \exists x F(x), \Delta}{\Gamma \vdash \exists x F(x),  \Delta} \tag{$\exists_R$}
+    \end{equation*}
+    Здесь аналогично справедливы ограничения на $t$ и $y$.
+\end{itemize}
+
+\begin{remark}
+    Обратный вывод при помощи секвенций также называют \textit{методом семантических таблиц Бета}.
+\end{remark}
+
+\begin{example}
+    Рассмотрим ситуации, когда необходимо учитывать ограничения на переменные, описанные в правилах. Попробуем доказать формулу $\exists x P(x) \supset \forall x P(x)$. Несложно заметить, что эта формула не общезначима. Проведём вывод:
+
+    \begin{proof}
+        \begin{equation*}
+            \begin{array}{c}
+                \begin{array}{llr}
+                    1.  & \vdash \exists x P(x) \supset \forall x P(x)
+                        & \supset_R
+                        \\
+                    2.  & \exists x P(x) \vdash \forall x P(x)
+                        & \exists_L
+                        \\
+                    3.  & P(c_1) \vdash \forall x P(x)
+                        & \forall_R 
+                        \\
+                    4.  & P(c_1) \vdash P(c_2)
+                        & 
+                        \\
+                \end{array}
+                \\
+            \end{array}
+        \end{equation*}
+    \end{proof}
+
+    Как видно, мы, корректно применяя правила вывода, пришли к тому, что утверждение ложно. В то же время, если бы мы установили $c_1 = c_2 = c$, то "доказали" бы ложное утверждение.
+\end{example}
+
+\begin{propthm}
+    $\forall x A \supset \exists x A$.
+\end{propthm}
+\begin{proof}
+    Приведём пример успешного вывода теоремы.
+    \begin{equation*}
+        \begin{array}{c}
+            \begin{array}{llr}
+                1.  & \vdash \forall x A \supset \exists x A 
+                    & \supset_R 
+                    \\
+                2.  &  \forall x A \vdash \exists x A
+                    & \forall_L
+                    \\
+                3.  & \forall x A, [t/x]A \vdash \exists x A
+                    & \exists_R
+                    \\
+                4.  & \forall x A, [t/x]A \vdash \exists x A, [t/x] A
+                    & W_R
+                    \\
+                5.  & \forall x A, [t/x]A \vdash [t/x] A
+                    & W_L
+                    \\
+                6.  & [t/x]A \vdash [t/x] A
+                    & \checkmark
+                    \\
+            \end{array}
+        \end{array}
+    \end{equation*}
+\end{proof}
+
+\begin{example}
+    Вследствие ограничений в правилах вывода для $\forall$ и $\exists$ при выводе можно попадать в "бесконечный цикл", что не позволяет нам судить об истинности предиката:
+    \begin{equation*}
+        \begin{array}{c}
+            \begin{array}{llr}
+                1.  & \vdash \forall x \exists y P(x,y) \supset \exists y \forall x P(x,y)
+                    & \supset_R
+                    \\
+                2.  & \underline{\forall x} \exists y P(x,y) \vdash \exists y \forall x P(x,y)
+                    & \forall_L
+                    \\
+                3.  & \forall x \exists y P(x,y), \exists y P(c_1,y)\vdash \underline{\exists y} \forall x P(x,y)
+                    & \exists_R
+                    \\
+                4.  & \forall x \exists y P(x,y), \underline{\exists y} P(c_1,y) \vdash \exists y \forall x P(x,y), \forall x P(x,c_2)
+                    & \exists_L
+                    \\
+                5.  & \forall x \exists y P(x,y), \exists y P(c_1,c_3)\vdash \exists y \forall x P(x,y), \underline{\forall x} P(x,c_2)
+                    & \forall_R
+                    \\
+                6.  & \forall x \exists y P(x,y), P(c_1,c_3) \vdash \exists y \forall x P(x,y),  P(c_4,c_2)
+                    & \infty
+                    \\
+            \end{array}
+            \\
+        \end{array}
+    \end{equation*}
+\end{example}

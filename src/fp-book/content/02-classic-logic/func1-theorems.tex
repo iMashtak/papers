@@ -1,0 +1,69 @@
+\section{Доказательства некоторых теорем исчисления предикатов 1-го порядка}
+
+\begin{propthm}\label{[a/x]A->E_x A}
+    $[a/x]A \supset \exists x A$, где $x$ --- индивидная переменная, а $a$ --- индивидная переменная или константа и $a$ не является связанной переменной ни в одной части формулы $A$.
+\end{propthm}
+\begin{proof}
+    \begin{equation*}
+        \begin{array}{lll}
+            1. & \vdash \forall x \overline{A} \supset \overline{[a/x]A} & \text{аксиома уточнения} \\ 
+            2. & \vdash \forall x \overline{A} \supset \overline{[a/x]A} \supset (\overline{\overline{[a/x]A}} \supset \overline{\forall x \overline{A}}) & [\forall x \overline{A}/A,\overline{[a/x]A}/B]C\lnot' \\ 
+            3. & \vdash \overline{\overline{[a/x]A}} \supset \overline{\forall x \overline{A}} & MP(1, 2) \\
+            4. & \vdash [a/x]A \supset \overline{\forall x \overline{A}} & ES(\equiv^{\lnot}, 3) \\ 
+            5. & \vdash [a/x]A \supset \exists x A & \text{по определению}
+        \end{array}
+    \end{equation*}
+\end{proof}
+
+\begin{propthm}
+    $\forall x A \supset \exists x A$.
+\end{propthm}
+\begin{proof}
+    \begin{equation*}
+        \begin{array}{lll}
+            1.  & \vdash [a/x]A \supset \exists x A
+                & \text{Теорема } \ref{[a/x]A->E_x A}
+                \\
+            2.  & \vdash \forall x A \supset [a/x]A
+                & \text{аксиома уточнения} 
+                \\
+            3.  & \forall x A \vdash [a/x]A
+                & MP(2)
+                \\
+            4.  & \forall x A \vdash \exists x A
+                & MP(3, 1)
+                \\
+            5.  & \vdash \forall x A \supset \exists x A
+                & TD(4)
+                \\
+        \end{array}
+    \end{equation*}
+\end{proof}
+
+\begin{propthm}
+    $\forall x (A\supset B) \supset (\forall x A \supset B)$.
+\end{propthm}
+\begin{proof}
+    \begin{equation*}
+        \begin{array}{llr}
+            1.  & \vdash \forall x A \supset A
+                & \text{аксиома уточнения} 
+                \\
+            2.  & \vdash \forall x (A \supset B) \supset (A \supset B)
+                & [A \supset B / A](1)
+                \\
+            3.  & \forall x (A \supset B) \vdash A \supset B
+                & MP(2)
+                \\
+            4.  & \forall x A \vdash A
+                & MP(1)
+                \\
+            5.  & \forall x (A \supset B), \forall x A \vdash B
+                & MP(4, 2)
+                \\
+            6.  & \vdash \forall x (A\supset B) \supset (\forall x A \supset B)
+               & TD(TD(4))
+                \\
+        \end{array}
+    \end{equation*}
+\end{proof}
